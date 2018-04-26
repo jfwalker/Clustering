@@ -1,5 +1,5 @@
 import sys,os
-
+import Seq
 
 if len(sys.argv) != 4:
 	print "Usage: python ClusterCombiner.py Folder1 Folder2 NumbOfBaits"
@@ -26,30 +26,20 @@ for filename in os.listdir(Cluster):
 	name = ""
 	
 	#Read in each file and save as a dictionary
-	for line in File:
+	Dict, Dict_length = Seq.fasta_parse(File)
 	
-		line = line.strip()
-		if line[0] == ">":
-			if count != 0:
-				Dict[name] = seq
-				size = len(seq)
-				Dict_length[name] = size
-			name = line
-			seq = ""
-		else:
-			seq = seq + line
-		count += 1
-	#Dealing with last seq
-	Dict[name] = seq
-	size = len(seq)
-	Dict_length[name] = size;
-
 	#Choose largest genes from files
 	test = sorted(Dict_length.items(), key=lambda x: x[1])
 	
+	filename_count = 0;
 	if NumbOfSeqs < len(Dict_length.keys()):
 		for x in range(NegNumbOfSeqs, 0):
+			print ">" + filename + "@" + str(filename_count)
 			print Dict[test[x][0]]
+			filename_count += 1
 	else:
-		print "Too Large"
+		for keys in Dict:
+			print ">" + filename + "@" + str(filename_count)
+			print Dict[keys]
+			filename_count += 1
 
