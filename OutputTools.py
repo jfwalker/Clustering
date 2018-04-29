@@ -10,3 +10,7 @@ def SummarizeBlast(NameOfOutfile,Matches):
 		for x in unique:
 			temp = temp + x + ","
 		NameOfOutfile.write(keys + "\t" + temp + "\n")
+		
+def PrintCombined(Hits,Folder):
+	
+	print "Need to add"

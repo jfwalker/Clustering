@@ -1,7 +1,7 @@
 import sys,os
 import Seq, ClusterTools, OutputTools
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
 	print "Usage: python ClusterCombiner.py Folder1 Folder2 NumbOfBaits OutFile OutFolder"
 	sys.exit()
 
@@ -9,6 +9,7 @@ Cluster = sys.argv[1]
 Cluster2 = sys.argv[2]
 NumbOfSeqs = int(sys.argv[3])
 NameOfOutfile = str(sys.argv[4])
+Folder = str(sys.argv[5])
 
 BlastDb = open("BlastDatabase.fa", "w")
 TestCluster = open("BlastQuery.fa", "w")
@@ -41,6 +42,12 @@ Matches = ClusterTools.MatchIt(hits)
 #Summarize Output to file
 OutputTools.SummarizeBlast(HitsFile,Matches)
 
+#Print to the new folder
+OutputTools.PrintCombined(HitsFile,Folder)
 
+#clean the area
+cmd = ""
+cmd = "rm BlastDatabase* BlastQuery.fa Hits.rawblastn"
+os.system(cmd)
 
 
