@@ -2,12 +2,13 @@ import sys,os
 import Seq, ClusterTools
 
 if len(sys.argv) != 4:
-	print "Usage: python ClusterCombiner.py Folder1 Folder2 NumbOfBaits"
+	print "Usage: python ClusterCombiner.py Folder1 Folder2 NumbOfBaits OutFile OutFolder"
 	sys.exit()
 
 Cluster = sys.argv[1]
 Cluster2 = sys.argv[2]
 NumbOfSeqs = int(sys.argv[3])
+
 BlastDb = open("BlastDatabase.fa", "w")
 TestCluster = open("BlastQuery.fa", "w")
 
@@ -29,6 +30,9 @@ cmd = "blastn -db BlastDatabase.fa -query BlastQuery.fa -evalue 1e-3 -num_thread
 os.system(cmd)
 
 #Make a synthesis of the hits
+Matches = {}
 hits = ""
 hits = "Hits.rawblastn"
-ClusterTools.MatchIt(hits)
+Matches = ClusterTools.MatchIt(hits)
+
+
