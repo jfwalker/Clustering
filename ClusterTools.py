@@ -45,21 +45,33 @@ def ClusterMaker(Cluster,NumbOfSeqs,BlastDb):
 def MatchIt(hits):
 	
 	Match_Hash = {}
+	match_list = []
 	blastfile = open(hits, "r")
 	
 	for line in blastfile:
 		
 		line = line.strip()
 		array = []
+		temp_list = []
+		matches = ()
 		array = line.split("\t")
 		#print array
 		species1_array = array[0].split("@");
 		species2_array = array[2].split("@");
 		#Make a hash of names representing the hits
+		species1_array[0] = species1_array[0] + ".folder2"
+		species2_array[0] = species2_array[0] + ".folder1"
+		
+		#For the graph make a list of tuples
+		temp_list = [species1_array[0], species2_array[0]]
+		matches = tuple(temp_list)
+		match_list.append(matches)
+		
+		#Get the unique hits for the output file
 		if species1_array[0] in Match_Hash:
 			Match_Hash[species1_array[0]].append(species2_array[0])
 		else:
 			Match_Hash[species1_array[0]] = []
 			Match_Hash[species1_array[0]].append(species2_array[0])
-	return Match_Hash
+	return Match_Hash,match_list
 

@@ -13,7 +13,7 @@ Folder = str(sys.argv[5])
 
 BlastDb = open("BlastDatabase.fa", "w")
 TestCluster = open("BlastQuery.fa", "w")
-HitsFile = open(NameOfOutfile, "w")
+#HitsFile = open(NameOfOutfile, "w")
 
 
 #Do this for the first cluster (one to make database of)
@@ -35,15 +35,16 @@ os.system(cmd)
 
 #Make a synthesis of the hits
 Matches = {}
+MatchList = []
 hits = ""
 hits = "Hits.rawblastn"
-Matches = ClusterTools.MatchIt(hits)
+Matches,MatchList = ClusterTools.MatchIt(hits)
 
 #Summarize Output to file
-OutputTools.SummarizeBlast(HitsFile,Matches)
+OutputTools.SummarizeBlast(NameOfOutfile,Matches)
 
 #Print to the new folder
-OutputTools.PrintCombined(HitsFile,Folder)
+OutputTools.PrintCombined(MatchList,Folder)
 
 #clean the area
 cmd = ""
