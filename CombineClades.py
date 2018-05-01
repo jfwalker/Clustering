@@ -17,11 +17,13 @@ TestCluster = open("BlastQuery.fa", "w")
 
 
 #Do this for the first cluster (one to make database of)
-ClusterTools.ClusterMaker(Cluster,NumbOfSeqs,BlastDb)
+AllClustsFolder1 = {}
+AllClustsFolder1 = ClusterTools.ClusterMaker(Cluster,NumbOfSeqs,BlastDb)
 
 
 #Do this for the query cluster
-ClusterTools.ClusterMaker(Cluster2,NumbOfSeqs,TestCluster)
+AllClustsFolder2 = {}
+AllClustsFolder2 = ClusterTools.ClusterMaker(Cluster2,NumbOfSeqs,TestCluster)
 
 #Make the blast database
 cmd = ""
@@ -29,11 +31,13 @@ cmd =  "makeblastdb -in BlastDatabase.fa -out BlastDatabase.fa -dbtype='nucl'"
 os.system(cmd)
 
 #Run the blast
+print "Running Blast"
 cmd = ""
 cmd = "blastn -db BlastDatabase.fa -query BlastQuery.fa -evalue 1e-3 -num_threads 3 -max_target_seqs 1 -out Hits.rawblastn -outfmt '6 qseqid qlen sseqid slen frames pident nident length mismatch gapopen qstart qend sstart send evalue bitscore'"
 os.system(cmd)
 
 #Make a synthesis of the hits
+print "Analyzing hits"
 Matches = {}
 MatchList = []
 hits = ""
@@ -41,10 +45,15 @@ hits = "Hits.rawblastn"
 Matches,MatchList = ClusterTools.MatchIt(hits)
 
 #Summarize Output to file
+print "Summarizing results"
 OutputTools.SummarizeBlast(NameOfOutfile,Matches)
 
 #Print to the new folder
-OutputTools.PrintCombined(MatchList,Cluster,Cluster2,Folder)
+print "Combining clusters"
+OutputTools.PrintCombined(MatchList,Cluster,Cluster2,Folder,AllClustsFolder1,AllClustsFolder2,NameOfOutfile)
+
+print "####Results####"
+print "Clusters Combined summary is: " + NameOfOutfile + "\n" + "Folder with clusters is: " + Folder
 
 #clean the area
 cmd = ""

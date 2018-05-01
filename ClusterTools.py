@@ -17,8 +17,10 @@ def FolderNameCheck(Folder):
 #Cluster for the blast database, A negative number (array is indexed backwards), The number of Seqs interested, The Name of the newfile
 def ClusterMaker(Cluster,NumbOfSeqs,BlastDb):
 	NegNumbOfSeqs = NumbOfSeqs * -1
+	ClusterNames = {}
 	for filename in os.listdir(Cluster):
 		
+		ClusterNames[filename] = filename
 		#Check if using kept the / for the folder (Drews fault)
 		if Cluster[-1] != "/":
 			toOpen = Cluster + "/" + filename
@@ -47,6 +49,7 @@ def ClusterMaker(Cluster,NumbOfSeqs,BlastDb):
 			for keys in Dict:
 				BlastDb.write(">" + filename + "@" + str(filename_count) + "\n" + Dict[keys] + "\n")
 				filename_count += 1
+	return ClusterNames
 
 #This takes in a hits file and summarizes what has hit what
 #Pythons syntax is super dull
