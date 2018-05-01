@@ -6,6 +6,14 @@ Ignore the variable names in this, it takes in a cluster and grabs the most char
 on the sequences and makes a fasta
 '''
 
+#Check folder names becomes weirdly useful
+def FolderNameCheck(Folder):
+	if Folder[-1] != "/":
+		toOpen = Folder + "/"
+	else:
+		toOpen = Folder
+	return toOpen	
+
 #Cluster for the blast database, A negative number (array is indexed backwards), The number of Seqs interested, The Name of the newfile
 def ClusterMaker(Cluster,NumbOfSeqs,BlastDb):
 	NegNumbOfSeqs = NumbOfSeqs * -1
