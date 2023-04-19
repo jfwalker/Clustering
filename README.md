@@ -1,5 +1,5 @@
 # Clustering
-Ericales and Nyctag etc...
+Ericales and Nyctag etc....
 Basic program to combine clusters
 
 The first two arguments are folders with clusters to be combined, the next argument is how many samples you want to check
